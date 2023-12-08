@@ -12,6 +12,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Address {
     private String city;
+
     private String state;
+
     private String postalCode;
+
+    public Address(AddressData data) {
+        this.city = data.city();
+        this.state = data.state();
+        this.postalCode = data.postalCode();
+    }
 }
