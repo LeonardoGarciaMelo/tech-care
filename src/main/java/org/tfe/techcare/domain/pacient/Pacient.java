@@ -16,7 +16,7 @@ import org.tfe.techcare.domain.gender.Gender;
 @EqualsAndHashCode(of = "id")
 public class Pacient {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String name;
     private int age;
     private String phone;
@@ -27,4 +27,13 @@ public class Pacient {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    public Pacient(PacientRegisterData data) {
+        this.name = data.name();
+        this.age = data.age();
+        this.phone = data.phone();
+        this.email = data.email();
+        this.address = new Address(data.address());
+        this.diagnosis = data.diagnosis();
+        this.gender = data.gender();
+    }
 }
