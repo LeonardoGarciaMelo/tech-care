@@ -34,3 +34,4 @@ build/
 
 memory
 memory:TechCare?cache=shared
+techcare.*.db
