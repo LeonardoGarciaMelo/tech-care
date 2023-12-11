@@ -12,7 +12,7 @@ public record PacientRegisterData(
         @NotBlank
         String name,
 
-        @NotBlank
+        @NotNull
         int age,
 
         @NotBlank
