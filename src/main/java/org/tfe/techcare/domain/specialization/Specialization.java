@@ -15,5 +15,8 @@ public enum Specialization {
 
     PEDIATRIC,
 
-    UROLOGY
+    UROLOGY,
+
+    ORTHOPEDIST
+
 }
