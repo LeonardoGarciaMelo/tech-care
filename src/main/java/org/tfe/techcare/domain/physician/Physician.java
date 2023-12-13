@@ -28,4 +28,14 @@ public class Physician {
     @Enumerated(EnumType.STRING)
     private Specialization specialization;
 
+    public Physician(PhysicianRegisterData data){
+        this.name = data.name();
+        this.age = data.age();
+        this.phone = data.phone();
+        this.email = data.email();
+        this.address = new Address(data.address());
+        this.registrationNumber = data.registrationNumber();
+        this.specialization = data.specialization();
+    }
+
 }
