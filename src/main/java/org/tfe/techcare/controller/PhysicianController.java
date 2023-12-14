@@ -3,10 +3,7 @@ package org.tfe.techcare.controller;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.tfe.techcare.domain.physician.Physician;
-import org.tfe.techcare.domain.physician.PhysicianListData;
-import org.tfe.techcare.domain.physician.PhysicianRegisterData;
-import org.tfe.techcare.domain.physician.PhysicianRepository;
+import org.tfe.techcare.domain.physician.*;
 
 import java.util.List;
 
@@ -19,6 +16,12 @@ public class PhysicianController {
     @GetMapping
     public List<PhysicianListData> list() {
         return repository.findAll().stream().map(PhysicianListData :: new).toList();
+    }
+
+    @GetMapping("{id}")
+    public PhysicianDetailData detail(@PathVariable Long id) {
+        Physician physician = repository.getReferenceById(id);
+        return new PhysicianDetailData(physician);
     }
 
     @PostMapping
