@@ -37,4 +37,13 @@ public class PhysicianController {
 
         return ResponseEntity.created(physicianInfo).body(new PhysicianDetailData(physician));
     }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<PhysicianDetailData> delete(@PathVariable Long id) {
+        var physician = repository.getReferenceById(id);
+
+        repository.delete(physician);
+
+        return ResponseEntity.ok(new PhysicianDetailData(physician));
+    }
 }

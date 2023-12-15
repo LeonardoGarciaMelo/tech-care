@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.tfe.techcare.domain.pacient.*;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -37,5 +36,14 @@ public class PacientController {
         var pacientInfo = uriBuilder.path("/pacients/{id}").buildAndExpand(pacient.getId()).toUri();
 
         return ResponseEntity.created(pacientInfo).body(new PacientDetailData(pacient));
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<PacientDetailData> delete(@PathVariable Long id) {
+       var pacient = repository.getReferenceById(id);
+
+       repository.delete(pacient);
+
+       return ResponseEntity.ok(new PacientDetailData(pacient));
     }
 }
