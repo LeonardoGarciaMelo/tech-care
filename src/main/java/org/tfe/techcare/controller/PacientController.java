@@ -46,4 +46,13 @@ public class PacientController {
 
        return ResponseEntity.ok(new PacientDetailData(pacient));
     }
+
+    @PutMapping
+    public ResponseEntity<PacientDetailData> edit(@RequestBody @Valid PacientEditData data) {
+        var pacient = repository.getReferenceById(data.id()); //Objeto do tipo pacient
+
+        pacient.edit(data);
+
+        return ResponseEntity.ok(new PacientDetailData(pacient));
+    }
 }

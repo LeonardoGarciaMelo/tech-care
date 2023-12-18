@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import org.tfe.techcare.domain.address.Address;
 import org.tfe.techcare.domain.gender.Gender;
 
-@Table(name = "pacients")
+@Table(name = "pacients") // A classe representa a tabela pacients
 @Entity(name = "Pacient")
 @Getter
 @NoArgsConstructor
@@ -35,5 +35,13 @@ public class Pacient {
         this.address = new Address(data.address());
         this.diagnosis = data.diagnosis();
         this.gender = data.gender();
+    }
+
+    public void edit(PacientEditData editData) {
+        if (editData.age() != 0) this.age = editData.age();
+        if (editData.phone() != null) this.phone = editData.phone();
+        if (editData.email() != null) this.email = editData.email();
+        if (editData.address() != null) this.address = editData.address();
+        if (editData.diagnosis() != null) this.diagnosis = editData.diagnosis();
     }
 }
