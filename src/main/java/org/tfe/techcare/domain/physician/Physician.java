@@ -38,4 +38,10 @@ public class Physician {
         this.specialization = data.specialization();
     }
 
+    public void edit(PhysicianEditData editData) {
+        if (editData.age() != 0) this.age = editData.age();
+        if (editData.phone() != null) this.phone = editData.phone();
+        if (editData.email() != null) this.email = editData.email();
+        if (editData.address() != null) this.address = editData.address();
+    }
 }

@@ -46,4 +46,15 @@ public class PhysicianController {
 
         return ResponseEntity.ok(new PhysicianDetailData(physician));
     }
+
+    @PutMapping
+    public ResponseEntity<PhysicianDetailData> edit(@RequestBody @Valid PhysicianEditData data) {
+        var physician = repository.getReferenceById(data.id());
+
+        physician.edit(data);
+
+        repository.save(physician);
+
+        return ResponseEntity.ok(new PhysicianDetailData(physician));
+    }
 }
