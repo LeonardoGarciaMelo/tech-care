@@ -53,6 +53,8 @@ public class PacientController {
 
         pacient.edit(data);
 
+        repository.save(pacient);
+
         return ResponseEntity.ok(new PacientDetailData(pacient));
     }
 }
