@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.tfe.techcare.domain.pacient.*;
+import org.tfe.techcare.services.PacientServices;
 
 import java.util.List;
 
@@ -13,25 +14,23 @@ import java.util.List;
 @RequestMapping("pacients")
 public class PacientController {
     @Autowired
-    private PacientRepository repository;
+    private PacientServices service;
 
     @GetMapping
     public ResponseEntity<List<PacientListData>> list() {
-        var response = repository.findAll().stream().map(PacientListData::new).toList();
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(service.list());
     }
 
     @GetMapping("{id}")
     public ResponseEntity<PacientDetailData> detail(@PathVariable Long id) {
-        Pacient pacient = repository.getReferenceById(id);
-        return ResponseEntity.ok(new PacientDetailData(pacient));
+        return ResponseEntity.ok((service.detail(id)));
     }
 
     @PostMapping
     public ResponseEntity<PacientDetailData> register(
             @RequestBody @Valid PacientRegisterData data, UriComponentsBuilder uriBuilder
     ) {
-        var pacient = repository.save(new Pacient(data));
+        var pacient = service.register(data);
 
         var pacientInfo = uriBuilder.path("/pacients/{id}").buildAndExpand(pacient.getId()).toUri();
 
@@ -40,21 +39,13 @@ public class PacientController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<PacientDetailData> delete(@PathVariable Long id) {
-       var pacient = repository.getReferenceById(id);
+       var pacient = service.delete(id);
 
-       repository.delete(pacient);
-
-       return ResponseEntity.ok(new PacientDetailData(pacient));
+       return ResponseEntity.ok(pacient);
     }
 
     @PutMapping
     public ResponseEntity<PacientDetailData> edit(@RequestBody @Valid PacientEditData data) {
-        var pacient = repository.getReferenceById(data.id()); //Objeto do tipo pacient
-
-        pacient.edit(data);
-
-        repository.save(pacient);
-
-        return ResponseEntity.ok(new PacientDetailData(pacient));
+        return ResponseEntity.ok(service.edit(data));
     }
 }
