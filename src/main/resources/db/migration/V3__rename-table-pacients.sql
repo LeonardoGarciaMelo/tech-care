@@ -1,0 +1,1 @@
+ALTER TABLE pacients RENAME TO patients;

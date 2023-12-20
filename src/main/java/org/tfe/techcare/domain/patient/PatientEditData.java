@@ -1,8 +1,8 @@
-package org.tfe.techcare.domain.pacient;
+package org.tfe.techcare.domain.patient;
 
 import org.tfe.techcare.domain.address.Address;
 
-public record PacientEditData(
+public record PatientEditData(
 
         Long id,
 

@@ -1,4 +1,4 @@
-package org.tfe.techcare.domain.pacient;
+package org.tfe.techcare.domain.patient;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import org.tfe.techcare.domain.address.AddressData;
 import org.tfe.techcare.domain.gender.Gender;
 
-public record PacientRegisterData(
+public record PatientRegisterData(
 
         @NotBlank
         String name,

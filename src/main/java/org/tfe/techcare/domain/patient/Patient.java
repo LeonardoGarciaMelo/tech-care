@@ -1,4 +1,4 @@
-package org.tfe.techcare.domain.pacient;
+package org.tfe.techcare.domain.patient;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,13 +8,13 @@ import lombok.NoArgsConstructor;
 import org.tfe.techcare.domain.address.Address;
 import org.tfe.techcare.domain.gender.Gender;
 
-@Table(name = "pacients") // A classe representa a tabela pacients
-@Entity(name = "Pacient")
+@Table(name = "patients") // A classe representa a tabela pacients
+@Entity(name = "Patient")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Pacient {
+public class Patient {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
@@ -27,7 +27,7 @@ public class Pacient {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    public Pacient(PacientRegisterData data) {
+    public Patient(PatientRegisterData data) {
         this.name = data.name();
         this.age = data.age();
         this.phone = data.phone();
@@ -37,7 +37,7 @@ public class Pacient {
         this.gender = data.gender();
     }
 
-    public void edit(PacientEditData editData) {
+    public void edit(PatientEditData editData) {
         if (editData.age() != 0) this.age = editData.age();
         if (editData.phone() != null) this.phone = editData.phone();
         if (editData.email() != null) this.email = editData.email();
