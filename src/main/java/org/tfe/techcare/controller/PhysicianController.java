@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.tfe.techcare.domain.physician.*;
+import org.tfe.techcare.services.PhysicianServices;
 
 import java.util.List;
 
@@ -13,25 +14,23 @@ import java.util.List;
 @RequestMapping("physicians")
 public class PhysicianController {
     @Autowired
-    private PhysicianRepository repository;
+    private PhysicianServices service;
 
     @GetMapping
     public ResponseEntity<List<PhysicianListData>> list() {
-        var response = repository.findAll().stream().map(PhysicianListData::new).toList();
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(service.list());
     }
 
     @GetMapping("{id}")
     public ResponseEntity<PhysicianDetailData> detail(@PathVariable Long id) {
-        Physician physician = repository.getReferenceById(id);
-        return ResponseEntity.ok(new PhysicianDetailData(physician));
+        return ResponseEntity.ok(service.detail(id));
     }
 
     @PostMapping
     public ResponseEntity<PhysicianDetailData> register(
             @RequestBody @Valid PhysicianRegisterData data, UriComponentsBuilder uriBuilder
     ) {
-        var physician = repository.save(new Physician(data));
+        var physician = service.register(data);
 
         var physicianInfo = uriBuilder.path("/physicians/{id}").buildAndExpand(physician.getId()).toUri();
 
@@ -40,21 +39,11 @@ public class PhysicianController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<PhysicianDetailData> delete(@PathVariable Long id) {
-        var physician = repository.getReferenceById(id);
-
-        repository.delete(physician);
-
-        return ResponseEntity.ok(new PhysicianDetailData(physician));
+        return ResponseEntity.ok(service.delete(id));
     }
 
     @PutMapping
     public ResponseEntity<PhysicianDetailData> edit(@RequestBody @Valid PhysicianEditData data) {
-        var physician = repository.getReferenceById(data.id());
-
-        physician.edit(data);
-
-        repository.save(physician);
-
-        return ResponseEntity.ok(new PhysicianDetailData(physician));
+        return ResponseEntity.ok(service.edit(data));
     }
 }
